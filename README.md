@@ -1,2 +1,2 @@
-# thesouthhacks.github.io
+# TheSouthHacks
 ![Git Actions](https://github.com/TheSouthHacks/thesouthhacks.github.io/workflows/Notifier/badge.svg)
