@@ -1505,15 +1505,15 @@ body.out .pointer {
 .pointer.large {
 	width: 65px;
 	height: 65px;
-	background: rgba(239,13,51,.15);
-	-webkit-box-shadow: 0 0 30px rgba(239,13,51, 0.8);
-	    box-shadow: 0 0 30px rgba(239,13,51, 0.8);
+	background:rgba(13, 224, 239, 0.8);
+	-webkit-box-shadow: 0 0 30px rgba(13, 224, 239, 0.8);
+	    box-shadow: 0 0 30px rgba(13, 224, 239, 0.8);
 }
 
 .pointer.small {
 	width: 25px;
 	height: 25px;
-	background: rgba(239,13,51,0);
+	background: rgba(13, 224, 239, 0.8);
 	-webkit-box-shadow: 0 0 30px #08b1ff;
 	    box-shadow: 0 0 30px #08b1ff;
 }
@@ -1521,7 +1521,7 @@ body.out .pointer {
 .pointer.right {
 	width: 70px;
 	height: 70px;
-	background: rgba(239,13,51,0);
+	background: rgba(13, 224, 239, 0.8);
 	border: 2px solid #08b1ff;
 }
 
@@ -1529,7 +1529,7 @@ body.out .pointer {
 .pointer.open {
 	width: 80px;
 	height: 80px;
-	background: rgba(239,13,51,0);
+	background: rgba(13, 224, 239, 0.8);
 	border: 2px solid #08b1ff;
 }
 
