@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^home$ index.html [NC,L]
+RewriteRule ^about$ about.html [NC,L]
+RewriteRule ^contact$ contact.html [NC,L]
