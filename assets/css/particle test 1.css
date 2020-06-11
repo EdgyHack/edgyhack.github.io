@@ -1505,9 +1505,9 @@ body.out .pointer {
 .pointer.large {
 	width: 65px;
 	height: 65px;
-	background:rgba(13, 224, 239, 0.8);
-	-webkit-box-shadow: 0 0 30px rgba(13, 224, 239, 0.8);
-	    box-shadow: 0 0 30px rgba(13, 224, 239, 0.8);
+	background:rgba(13, 224, 239, 0);
+	-webkit-box-shadow: 0 0 30px #08b1ff;
+	    box-shadow: 0 0 30px #08b1ff;
 }
 
 .pointer.small {
