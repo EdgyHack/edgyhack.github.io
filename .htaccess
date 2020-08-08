@@ -1,4 +1,4 @@
 RewriteEngine on
-RewriteRule ^home$ index.html [NC,L]
-RewriteRule ^about$ about.html [NC,L]
-RewriteRule ^contact$ contact.html [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
