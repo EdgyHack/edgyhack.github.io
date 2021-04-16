@@ -1,292 +1,384 @@
-/**
-* Template Name: Presento - v3.1.0
-* Template URL: https://bootstrapmade.com/presento-bootstrap-corporate-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-(function() {
-  "use strict";
+/********************************************************
+  1. Custom mouse cursor
+  2. Animsition preloader
+  3. Swiper slider
+  4. Isotope filter
+  5. Midnight
+  6. Navigation open/close
+  7. Drop-down menu
+  8. Change menu background
+  9. ScrollAnimations
+  10. Headroom
+  11. Magnific popup
+  12. Scroll to id
+  13. Touch, no touch
+  14. fixed footer
+  15. Progress bar
+********************************************************/
 
-  /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
-
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
-    }
-  }
-
-  /**
-   * Easy on scroll event listener 
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
-
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
-      } else {
-        navbarlink.classList.remove('active')
-      }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
-
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select('#header')
-    let offset = header.offsetHeight
-
-    if (!header.classList.contains('header-scrolled')) {
-      offset -= 16
-    }
-
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: 'smooth'
-    })
-  }
-
-  /**
-   * Toggle .header-scrolled class to #header when page is scrolled
-   */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 100) {
-        selectHeader.classList.add('header-scrolled')
-      } else {
-        selectHeader.classList.remove('header-scrolled')
-      }
-    }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
-  }
-
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add('active')
-      } else {
-        backtotop.classList.remove('active')
-      }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
-  }
-
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
-
-  /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
-
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
-
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
-  /**
-   * Clients Slider
-   */
-  new Swiper('.clients-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 40
-      },
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 60
-      },
-      640: {
-        slidesPerView: 4,
-        spaceBetween: 80
-      },
-      992: {
-        slidesPerView: 6,
-        spaceBetween: 120
-      }
-    }
-  });
-
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item',
-        layoutMode: 'fitRows'
-      });
-
-      let portfolioFilters = select('#portfolio-flters li', true);
-
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
-
-  });
-
-  /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
-
-  /**
-   * Portfolio details slider
-   */
-  new Swiper('.portfolio-details-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
-
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
-
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      }
-    }
-  });
-
-  /**
-   * Animation on scroll
-   */
-  window.addEventListener('load', () => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    })
-  });
-
-})()
+$(function() {
+    "use strict";
+    
+    /* 1. Custom mouse cursor */
+	document.getElementsByTagName("body")[0].addEventListener("mousemove", function(n) {
+		e.style.left = n.clientX + "px", 
+		e.style.top = n.clientY + "px"
+    });
+    var 
+        e = document.getElementById("pointer");
+        
+	$(document).mousemove(function(e){
+		
+		$(".red-bg")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("black")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("black")	  
+		})
+		
+		$(".pointer-large, .swiper-button-next, .swiper-button-prev, .mfp-arrow-left, .mfp-arrow-right, .home-slider .swiper-pagination-bullet")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("large")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("large")	  
+		})
+		
+		$(".pointer-small, .testimonials-slider .swiper-pagination-bullet, .portfolio-slider .swiper-pagination-bullet")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("small")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("small")	  
+		})
+		
+		$(".mfp-img, .pointer-right")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("right")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("right")	  
+		})
+		
+		$(".pointer-zoom")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("zoom")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("zoom")	  
+		})
+		
+		$(".pointer-open")
+		.on("mouseenter", function() {	 
+			$('.pointer').addClass("open")	  
+		})
+		.on("mouseleave", function() {	  
+			$('.pointer').removeClass("open")	  
+		})
+		
+	});
+	
+	$(document).ready(function() {
+	
+		/* 2. Animsition preloader */
+		$(".animsition-overlay").animsition({
+		    inClass: 'overlay-slide-in-right',
+		    outClass: 'overlay-slide-out-right',
+		   	inDuration: 1,
+		    outDuration: 1500,
+		    linkElement: '.animsition-link',
+		    // e.g. linkElement: 'a:not([target="_blank"]):not([href^="#"])'
+		    loading: false,
+		    loadingParentElement: 'body', //animsition wrapper element
+		    loadingClass: 'animsition-loading',
+		    loadingInner: '', // e.g '<img src="loading.svg" />'
+		    timeout: false,
+		    timeoutCountdown: 5000,
+		    onLoadEvent: true,
+		    browser: [ 'animation-duration', '-webkit-animation-duration'],
+		    // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+		    // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+		    overlay : true,
+		    overlayClass : 'animsition-overlay-slide',
+		    overlayParentElement : 'body',
+		    transition: function(url){ window.location.href = url; }
+		});
+			
+		$('body').on('animsition.outStart', function(){
+			$('body').removeClass('active');
+			$('body').addClass('out');
+		})
+		
+		$('body').on('animsition.inEnd', function(){
+			$('body').addClass('active');
+			$('body').addClass('in');
+			setTimeout(function () {      
+			    $("body").addClass("anim"); 
+			}, 1000);
+			
+			/* 3. Swiper slider */
+			var interleaveOffset = 0.5;
+	
+			var mySwiper = new Swiper ('.home-slider', {
+				spaceBetween: 0,
+			  	speed: 1500,
+			    autoplay: {
+			        delay: 5000
+			    },
+			    autoHeight: true,
+			  	watchSlidesProgress: true,
+			  	pagination: {
+					el: '.swiper-pagination',
+			    	type: 'bullets',
+			       	clickable: true
+				},
+			  	navigation: {
+			    	nextEl: ".swiper-button-next",
+			    	prevEl: ".swiper-button-prev"
+			  	},
+			  	on: {
+				    progress: function() {
+				      	var swiper = this;
+					  	for (var i = 0; i < swiper.slides.length; i++) {
+				        	var slideProgress = swiper.slides[i].progress;
+							var innerOffset = swiper.width * interleaveOffset;
+							var innerTranslate = slideProgress * innerOffset;
+							swiper.slides[i].querySelector(".slide-bg").style.transform =
+				          	"translate3d(" + innerTranslate + "px, 0, 0)";
+				      	}      
+				    },
+				    touchStart: function() {
+				      	var swiper = this;
+					  	for (var i = 0; i < swiper.slides.length; i++) {
+				        	swiper.slides[i].style.transition = "";
+				      	}
+				    },
+				    setTransition: function(speed) {
+				      	var swiper = this;
+					  	for (var i = 0; i < swiper.slides.length; i++) {
+				        	swiper.slides[i].style.transition = speed + "ms";
+							swiper.slides[i].querySelector(".slide-bg").style.transition =
+							speed + "ms";
+				      	}
+				    }
+			  	}
+			});
+				
+			var swiper = new Swiper ('.testimonials-slider', {
+			  	speed: 1200,
+			    autoplay: {
+			        delay: 5000
+			    },
+			    spaceBetween: 30,
+			    loop: true,
+			    autoHeight: true,
+		      	pagination: {
+		        	el: '.swiper-pagination',
+					clickable: true
+		      	}
+		    });
+			    
+		    var swiper = new Swiper ('.about-slider', {
+			  	slidesPerView: 2,
+			  	spaceBetween: 30,
+			  	centeredSlides: true,
+			  	speed: 1400,
+			  	freeMode: true,
+			  	navigation: {
+			    	nextEl: ".swiper-button-next",
+			    	prevEl: ".swiper-button-prev"
+			  	},
+			  	breakpoints: {
+				    767: {
+				    	slidesPerView: 1
+				    }
+				}
+		    });
+		    
+		    var mySwiper = new Swiper(".portfolio-slider", {
+				direction: "vertical",
+				navigation: {
+			    	nextEl: ".swiper-button-next",
+			    	prevEl: ".swiper-button-prev"
+			  	},
+			  	pagination: {
+		        	el: '.swiper-pagination',
+					clickable: true,
+					dynamicBullets: true
+		      	},
+			  	speed: 1300,
+			  	parallax: true,
+			  	autoplay: false,
+			  	effect: "slide",
+			  	mousewheel: {
+			  		sensitivity: 1
+	  			}
+			});
+	
+			var mySwiper = new Swiper(".portfolio-column-slider", {
+				slidesPerView: 3,
+				navigation: {
+			    	nextEl: ".swiper-button-next",
+			    	prevEl: ".swiper-button-prev"
+			  	},
+			  	speed: 1300,
+			  	parallax: true,
+			  	freeMode: true,
+			  	autoplay: false,
+			  	breakpoints: {
+				    999: {
+				    	slidesPerView: 2
+				    },
+				    767: {
+				    	slidesPerView: 1
+				    }
+				},
+				mousewheel: {
+					sensitivity: 1
+	  			}
+			});
+		    
+		    var swiper = new Swiper ('.portfolio-slider2', {
+			  	slidesPerView: 2,
+			  	spaceBetween: 30,
+			  	centeredSlides: true,
+			  	speed: 1400,
+			  	autoplay: {
+			        delay: 5000
+			    },
+			  	freeMode: true,
+			  	navigation: {
+			    	nextEl: ".swiper-button-next",
+			    	prevEl: ".swiper-button-prev"
+			  	},
+			  	breakpoints: {
+				    999: {
+				    	slidesPerView: 1
+				    }
+				}
+		    });
+		    
+		    /* 4. Isotope filter */
+			function projectFilter() {
+				var $gridt = $('.works');
+				$gridt.isotope({
+			  		itemSelector: '.grid-item',
+			  		percentPosition: true
+				});
+				$('.filter-buttons').on('click', 'button', function () {
+					var filterValue = $(this).attr('data-filter');
+					$gridt.isotope({
+						filter: filterValue
+					});
+					$(this).addClass('active').siblings().removeClass('active');
+				});
+			};
+			projectFilter();
+	
+		});
+		    
+	    /* 5. Midnight */
+	    $('.fixed-header').midnight();
+		
+		/* 6. Navigation open/close */
+		$( ".menu-open" ).on( "click", function() {
+		  	$('.menu-open, .nav-container').addClass('active');
+		});
+		
+		$( ".menu-close" ).on( "click", function() {
+		  	$('.menu-open, .nav-container').removeClass('active');
+		});
+		
+		/* 7. Drop-down menu */
+		$('.dropdown-open').on("click",function(){
+		    $(this).find('.dropdown').addClass('active');
+		    $('.nav-link').addClass('done');
+		    $('.dropdown-close').addClass('active');
+		});
+		
+		$('.dropdown-close').on("click",function(){    
+		    $('.dropdown').removeClass('active');
+		    $('.nav-link').removeClass('done');
+		    $('.dropdown-close').removeClass('active');
+		});
+	
+	});
+		
+	/* 8. Change menu background */
+	$(document).on('mouseover', '.nav-bg-change', function(){		
+		$(this).addClass('active').siblings().removeClass('active')
+	});
+	
+	/* 9. ScrollAnimations */
+	var $containers = $('[data-animation]:not([data-animation-child]), [data-animation-container]');
+	$containers.scrollAnimations();
+	
+	/* 10. Headroom */
+	$(".fixed-header").headroom();
+	
+	/* 11. Magnific popup */
+	$('.photo-popup').magnificPopup({
+	  	type: 'image',
+	  	mainClass: 'mfp-with-zoom', // this class is for CSS animation below
+	  	gallery: {
+	    	// options for gallery
+	    	enabled: true
+	  	},
+	  	zoom: {
+	    	enabled: true, // By default it's false, so don't forget to enable it
+			duration: 800, // duration of the effect, in milliseconds
+			easing: 'cubic-bezier(.86, 0, .07, 1)', // CSS transition easing function
+			// The "opener" function should return the element from which popup will be zoomed in
+			// and to which popup will be scaled down
+			// By defailt it looks for an image tag:
+			opener: function(openerElement) {
+	      		// openerElement is the element on which popup was initialized, in this case its <a> tag
+		  		// you don't need to add "opener" option if this code matches your needs, it's defailt one.
+		  		return openerElement.is('img') ? openerElement : openerElement.find('img');
+	    	}
+	  	}
+	});
+	
+	$('.popup-youtube').magnificPopup({
+		disableOn: 700,
+		type: 'iframe',
+		mainClass: 'mfp-fade',
+		removalDelay: 160,
+		preloader: false
+	});
+	
+	/* 12. Scroll to id */
+	$('.to-top-btn, .scroll-btn').mPageScroll2id();
+	
+	/* 13. Touch, no touch */
+	var supports = (function() {
+	    var d = document.documentElement,
+	        c = "ontouchstart" in window || navigator.msMaxTouchPoints;
+	    if (c) {
+	        d.className += " touch";
+	        return {
+	            touch: true
+	        }
+	    } else {
+	        d.className += " no-touch";
+	        return {
+	            touch: false
+	        }
+	    }
+	})();
+	
+	/* 14. fixed footer */
+	$('footer').footerReveal({ 
+		shadow: false,
+		zIndex : 1
+	});
+	
+	/* 15. Progress bar */
+	$(".progress-zero").each(function(){
+		$(this).find(".progress-full").animate({
+			width: $(this).attr("data-progress")
+  		});
+	});
+	
+});

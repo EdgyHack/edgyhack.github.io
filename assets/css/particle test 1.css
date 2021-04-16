@@ -36,8 +36,7 @@
     8.6. Overlay Button
   9. Animations
     9.1. Loading animations
-	  9.1.1. Loading overlay animation 
-	  1
+      9.1.1. Loading overlay animation #1
       9.1.2. Loading overlay animation #2
       9.1.3. Loading fade animation
       9.1.4. Loading title fill animation
@@ -137,7 +136,7 @@ body {
   	-webkit-font-smoothing: antialiased;
   		-moz-osx-font-smoothing: grayscale;
   	font-family: "Oswald", sans-serif;
-  	color: #ffffff;
+  	color: #262626;
   	font-weight: 400;
  	margin: 0; 
 }
@@ -1052,13 +1051,9 @@ h6 {
 	    flex-basis: 41.66%;
 }
 
-/*.six-columns {
+.six-columns {
 	-ms-flex-preferred-size: 50%;
 	    flex-basis: 50%;
-}*/
-.six-columns  {
-	margin-left: 20px;
-
 }
 
 .seven-columns {
@@ -1091,17 +1086,6 @@ h6 {
 	    flex-basis: 100%;
 }
 
-.about-us-wrapper {
-	margin-top: 50px;
-
-}
-
-.about-us-header {
-float:right;
-margin-right: 50px;
-margin-bottom: 20px;
-
-}
 .one-offset {
 	margin-left: 8.33%;
 }
@@ -1529,7 +1513,7 @@ body.out .pointer {
 .pointer.small {
 	width: 25px;
 	height: 25px;
-	background:  rgba(13, 224, 239, 0);
+	background: rgba(13, 224, 239, 0);
 	-webkit-box-shadow: 0 0 30px #08b1ff;
 	    box-shadow: 0 0 30px #08b1ff;
 }
@@ -1537,7 +1521,7 @@ body.out .pointer {
 .pointer.right {
 	width: 70px;
 	height: 70px;
-	background:  rgba(13, 224, 239, 0);
+	background: rgba(13, 224, 239, 0);
 	border: 2px solid #08b1ff;
 }
 
@@ -3151,7 +3135,7 @@ body,
 }
 
 .text-color-3 {
-	color: white;
+	color: #b6b7b8;
 }
 
 .text-color-4 {
@@ -3159,7 +3143,7 @@ body,
 }
 
 .text-color-5 {
-	color: #ffffff;
+	color: #bcbdbd;
 }
 
 .text-color-6 {
